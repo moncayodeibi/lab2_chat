@@ -72,25 +72,29 @@ public class ChatClient {
             JOptionPane.PLAIN_MESSAGE);
     }
     
-    /**
-     * Connects to the server then enters the processing loop.
-     */
     private void run() throws IOException {
 
-        // Make connection and initialize streams
+        // colocamos dentro de la variable serverAddress la ip del servidor por el método get
         String serverAddress = getServerAddress();
+        //instanciamos de la clase Socket con la ip del sevidor y con la puerta de enlace 9001
         Socket socket = new Socket(serverAddress, 9001);
+        //dentro de la variable in colocamos lo que ingresamos
         in = new BufferedReader(new InputStreamReader(
             socket.getInputStream()));
+        //dentro de la variable out colocamos lo que deseamos imprimir
         out = new PrintWriter(socket.getOutputStream(), true);
 
-        // Process all messages from server, according to the protocol.
+        // entramos dentro de un lazo  para seguir enviando mensajes en el chat mientras se mantenga en verdadero
         while (true) {
+            //declaramos una variable string line para colocar lo que escribarmos 
             String line = in.readLine();
+            //si el nombre es correcto lo imprime
             if (line.startsWith("SUBMITNAME")) {
                 out.println(getName());
+                //si el nombre es correcto lo setea
             } else if (line.startsWith("NAMEACCEPTED")) {
                 textField.setEditable(true);
+                //si el texto ingresado es un mensaje lo imprime saltando una línea
             } else if (line.startsWith("MESSAGE")) {
                 messageArea.append(line.substring(8) + "\n");
             }
@@ -98,13 +102,16 @@ public class ChatClient {
     }
     
     /**
-     * Runs the client as an application with a closeable frame.
+     * la clase aplicación para poder enviar el mensaje, es la clase principal de ejecución
      */
     public static void main(String[] args) throws Exception {
+        //instanciamos la clase ChatClient
         ChatClient client = new ChatClient();
+        //corremos la pantalla creada en la clase ChatClient
         client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //hacemos visible la pantalla
         client.frame.setVisible(true);
-        client.run();
+        client.run(); //corrremos la apliación del chat
     }
     
 }
