@@ -1,6 +1,6 @@
-package ec.edu.epn.redes.broadcast;
-
+/*ActionEvent nos muestra si existe un evento y qu elo ha producido*/
 import java.awt.event.ActionEvent;
+/*ActionListener nos ayuda a manejar los eventos en acci[on*/
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,49 +8,32 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/*las siguientes importaciones son las necesarias para 
+que se muestre todo en interfaz gráfica, nos ayuda a configurar 
+el frame o patallas*/
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-/**
- * A simple Swing-based client for the chat server.  Graphically
- * it is a frame with a text field for entering messages and a
- * textarea to see the whole dialog.
- *
- * The client follows the Chat Protocol which is as follows.
- * When the server sends "SUBMITNAME" the client replies with the
- * desired screen name.  The server will keep sending "SUBMITNAME"
- * requests as long as the client submits screen names that are
- * already in use.  When the server sends a line beginning
- * with "NAMEACCEPTED" the client is now allowed to start
- * sending the server arbitrary strings to be broadcast to all
- * chatters connected to the server.  When the server sends a
- * line beginning with "MESSAGE " then all characters following
- * this string should be displayed in its message area.
- */
 public class ChatClient {
 
-	BufferedReader in;
+    /**/
+     /*Declaramos las variables de uso*/
+    BufferedReader in;
     PrintWriter out;
-    JFrame frame = new JFrame("Chatter");
+    JFrame frame = new JFrame("Chat múltiples clientes");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(8, 40);
     
-    /**
-     * Constructs the client by laying out the GUI and registering a
-     * listener with the textfield so that pressing Return in the
-     * listener sends the textfield contents to the server.  Note
-     * however that the textfield is initially NOT editable, and
-     * only becomes editable AFTER the client receives the NAMEACCEPTED
-     * message from the server.
-     */
+    /*constructor de la clase ChatClient donde inicializamos las variables antes definidas*/
     public ChatClient() {
 
-        // Layout GUI
-        textField.setEditable(false);
-        messageArea.setEditable(false);
+        // a continiación se implementa el códido de la inferfaz gráfico
+        textField.setEditable(false);   //la caja de exto se encuentra deshabilitada
+        messageArea.setEditable(false); //el área de texto se nuestras deshabilitada
         frame.getContentPane().add(textField, "North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
         frame.pack();
