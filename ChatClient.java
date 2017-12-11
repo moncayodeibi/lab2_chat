@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 /*ActionListener nos ayuda a manejar los eventos en acci[on*/
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+/*blibliotecas de manejo de excepciones*/
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -21,9 +22,10 @@ import javax.swing.JTextField;
 public class ChatClient {
 
     /**/
-     /*Declaramos las variables de uso*/
+     /*Declaramos las variables de uso para leer e imprimir los mensajes*/
     BufferedReader in;
     PrintWriter out;
+    /**/
     JFrame frame = new JFrame("Chat múltiples clientes");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(8, 40);
@@ -34,37 +36,33 @@ public class ChatClient {
         // a continiación se implementa el códido de la inferfaz gráfico
         textField.setEditable(false);   //la caja de exto se encuentra deshabilitada
         messageArea.setEditable(false); //el área de texto se nuestras deshabilitada
-        frame.getContentPane().add(textField, "North");
+        frame.getContentPane().add(textField, "North");//lugar donde va a reflejarse el texto escrito
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
         frame.pack();
 
-        // Add Listeners
+        // añadimos la clase espera o escuha para la espera de un texto dentro del chat
         textField.addActionListener(new ActionListener() {
-            /**
-             * Responds to pressing the enter key in the textfield by sending
-             * the contents of the text field to the server.    Then clear
-             * the text area in preparation for the next message.
-             */
+           //metodo que ayuda al manejo del texto ingresado
             public void actionPerformed(ActionEvent e) {
-                out.println(textField.getText());
-                textField.setText("");
+                out.println(textField.getText());//se imprime el texto ingresado
+                textField.setText(""); //lueve el texto a ser vacío
             }
         });
     }
     
     /**
-     * Prompt for and return the address of the server.
+     método de ingreso de la ip del servidor del chat
      */
     private String getServerAddress() {
         return JOptionPane.showInputDialog(
             frame,
-            "Enter IP Address of the Server:",
-            "Welcome to the Chatter",
+            "Ingresa la IP del servidor",
+            "Bienvenido al chat",
             JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
-     * Prompt for and return the desired screen name.
+     * método para escojer un nombre dentro del chat o nickname
      */
     private String getName() {
         return JOptionPane.showInputDialog(
