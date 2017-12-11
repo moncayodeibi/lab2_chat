@@ -78,29 +78,32 @@ public class ChatServer {
                 out.println("NAMEACCEPTED");
                 writers.add(out);
 
-                // Accept messages from this client and broadcast them.
-                // Ignore other clients that cannot be broadcasted to.
+                // Aceptamos los mensajes de todas las personas con nombre correcto
                 while (true) {
+			//mientras los clientes escriben se lee lo que se escribe y se coloca en la variable input
                     String input = in.readLine();
                     if (input == null) {
                         return;
                     }
+			//cuando el cliente envie el mensaje se coloca el nombre escojigo más lo que el cliente escribió en el mensaje	
                     for (PrintWriter writer : writers) {
                         writer.println("MESSAGE " + name + ": " + input);
                     }
                 }
             } catch (IOException e) {
+		    //variable de excepción en el caso de algún error
                 System.out.println(e);
             } finally {
-                // This client is going down!  Remove its name and its print
-                // writer from the sets, and close its socket.
+                //si algo sale mal se se quita el nombre 
                 if (name != null) {
                     names.remove(name);
                 }
                 if (out != null) {
+			//quiamamos el nombre y la escrtitura para que quede libre
                     writers.remove(out);
                 }
                 try {
+			//cerramos el socket de la comunicación
                     socket.close();
                 } catch (IOException e) {
                 }
